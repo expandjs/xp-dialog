@@ -1,0 +1,246 @@
+<!--
+@license
+Copyright (c) 2015 The expand.js authors. All rights reserved.
+This code may only be used under the BSD style license found at https://expandjs.github.io/LICENSE.txt
+The complete set of authors may be found at https://expandjs.github.io/AUTHORS.txt
+The complete set of contributors may be found at https://expandjs.github.io/CONTRIBUTORS.txt
+-->
+
+<!--
+This component is used to display a dialog.
+
+@component xp-dialog
+@description This component is used to display a dialog.
+
+@dependency polymer Polymer/polymer#^0.5
+@dependency expandjs ExpandJS/expandjs
+@dependency xp-overlay-state ExpandJS/xp-overlay-state
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../expandjs/expandjs.html">
+<link rel="import" href="../xp-overlay-state/xp-overlay-state.html">
+
+<polymer-element name="xp-dialog" constructor="XPDialogElement" attributes="autoHideDisabled backdropDisabled context data fullScreen height showed target width">
+
+    <template>
+        <link rel="stylesheet" href="../xp-overlay-state/xp-overlay-state.css">
+        <style>
+            :host {
+                background: hsla(0, 0%, 100%, 1);
+                margin: 24px 40px;
+            }
+
+            :host([fullScreen]) {
+                height: 100vh !important;
+                margin: 0 !important;
+                width: 100vw !important;
+            }
+
+            :host #xpDialogBackdrop {
+                background: hsla(0, 0%, 0%, 0.5);
+
+                /* FIT */
+                bottom: 0;
+                left: 0;
+                position: fixed;
+                right: 0;
+                top: 0;
+            }
+
+            :host([backdropDisabled]) #xpDialogBackdrop {
+                background: transparent !important;
+            }
+
+            :host #xpDialogWrapper {
+                background: inherit;
+                min-height: 100%;
+                overflow: auto;
+            }
+        </style>
+        <template context="{{}}" is="xp-overlay-state" id="xpOverlayState" autoHideDisabled="{{autoHideDisabled}}" data="{{data}}" showed="{{showed}}" target="{{target}}"></template>
+        <div id="xpDialogBackdrop" on-click="{{hide}}"></div>
+        <div id="xpDialogWrapper"><content id="content"></content></div>
+    </template>
+
+    <script>
+        XPComponent({
+
+            /**
+             * Hides the dialog.
+             *
+             * @method hide
+             * @returns {Element}
+             */
+            hide: function () {
+                var self = this;
+                self.$.xpOverlayState.hide();
+                return self;
+            },
+
+            /**
+             * Shows the dialog.
+             *
+             * @method show
+             * @param {Element | string} target
+             * @param {*} [data]
+             * @returns {Element}
+             */
+            show: function (target, data) {
+                var self = this;
+                self.$.xpOverlayState.show(target, data);
+                return self;
+            },
+
+            /**
+             * Toggles the dialog.
+             *
+             * @method toggle
+             * @param {Element | string} target
+             * @param {*} [data]
+             * @returns {Element}
+             */
+            toggle: function (target, data) {
+                var self = this;
+                self.$.xpOverlayState.toggle(target, data);
+                return self;
+            },
+
+            /*********************************************************************/
+
+            /**
+             * Aligns the dialog.
+             *
+             * @method align
+             * @returns {Element}
+             * @private
+             */
+            align: function () {
+                var self = this;
+                if (self.showed) { XP.alignElement(self); }
+                return self;
+            },
+
+            /**
+             * Resizes the dialog.
+             *
+             * @method resize
+             * @returns {Element}
+             * @private
+             */
+            resize: function () {
+
+                // Vars
+                var self = this;
+
+                // Stylizing
+                XP.setStyle(self, 'margin', self.fullScreen ? 0 : null);
+                XP.setStyle(self, 'height', self.height ? self.height + 'px' : null);
+                XP.setStyle(self, 'width', self.width ? self.width + 'px' : null);
+
+                // Aligning
+                self.align();
+
+                return self;
+            },
+
+            /*********************************************************************/
+
+            // OBSERVE
+            observe: {
+                'showed': 'align',
+                'fullScreen height width': 'resize'
+            },
+
+            // PUBLISH
+            publish: {
+
+                /**
+                 * If set to true, the dialog will not close by clicking outside.
+                 *
+                 * @attribute autoHideDisabled
+                 * @type boolean
+                 * @default false
+                 */
+                autoHideDisabled: {reflect: true, value: false},
+
+                /**
+                 * If set to true, the backdrop is transparent.
+                 *
+                 * @attribute backdropDisabled
+                 * @type boolean
+                 * @default false
+                 */
+                backdropDisabled: {reflect: true, value: false},
+
+                /**
+                 * The context element.
+                 *
+                 * @attribute context
+                 * @type Element
+                 */
+                context: {reflect: false, value: null},
+
+                /**
+                 * The element's data.
+                 *
+                 * @attribute data
+                 * @type *
+                 */
+                data: {reflect: false, value: null},
+
+                /**
+                 * If set to true, the dialog is full screen.
+                 *
+                 * @attribute fullScreen
+                 * @type boolean
+                 * @default false
+                 */
+                fullScreen: {reflect: true, value: false},
+
+                /**
+                 * The dialog's height. If `0` the dialog will resize itself based on it's content.
+                 *
+                 * @attribute height
+                 * @type number
+                 * @default 0
+                 */
+                height: {reflect: true, value: 0},
+
+                /**
+                 * If set to true, the dialog is showed.
+                 *
+                 * @attribute showed
+                 * @type boolean
+                 * @default false
+                 */
+                showed: {reflect: true, value: false},
+
+                /**
+                 * The `id` of the targeted element or the element itself.
+                 *
+                 * @attribute target
+                 * @type Element | string
+                 */
+                target: {reflect: false, value: null},
+
+                /**
+                 * The dialog's width. If `0` the dialog will resize itself based on it's content.
+                 *
+                 * @attribute width
+                 * @type number
+                 * @default 0
+                 */
+                width: {reflect: true, value: 0}
+            },
+
+            /*********************************************************************/
+
+            // LISTENER
+            ready: function () {
+                XP.listen('resize', this.align.bind(this));
+            }
+        });
+    </script>
+
+</polymer-element>
