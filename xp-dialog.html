@@ -60,7 +60,7 @@ This element is used to display a dialog.
             }
         </style>
         <template context="{{}}" is="xp-overlay-state" id="xpOverlayState" autoHideDisabled="{{autoHideDisabled}}" data="{{data}}" showed="{{showed}}" target="{{target}}"></template>
-        <div id="xpDialogBackdrop" on-click="{{hide}}"></div>
+        <div id="xpDialogBackdrop" on-tap="{{hide}}"></div>
         <div id="xpDialogWrapper"><content id="content"></content></div>
     </template>
 
