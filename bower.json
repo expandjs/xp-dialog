@@ -1,8 +1,8 @@
 {
   "name": "xp-dialog",
   "license": "BSD-3-Clause",
-  "version": "0.8.4",
-  "description": "This element is used to display a dialog.",
+  "version": "0.8.5",
+  "description": "Custom element used to create a dialog box",
   "homepage": "http://www.expandjs.com/elements/xp-dialog",
   "authors": [
     "Giuliano Rullo <g.rullo@expandjs.com>",
