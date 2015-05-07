@@ -22,7 +22,7 @@ This element is used to display a dialog.
 <link rel="import" href="../expandjs/expandjs.html">
 <link rel="import" href="../xp-overlay-state/xp-overlay-state.html">
 
-<polymer-element name="xp-dialog" constructor="XPDialogElement" attributes="autoHideDisabled backdropDisabled context data fullScreen height showed target width">
+<polymer-element name="xp-dialog" constructor="XPDialogElement" attributes="autoHideDisabled backdropDisabled context data fullScreen height showed width">
 
     <template>
         <link rel="stylesheet" href="../xp-overlay-state/xp-overlay-state.css">
@@ -59,7 +59,7 @@ This element is used to display a dialog.
                 overflow: auto;
             }
         </style>
-        <template context="{{}}" is="xp-overlay-state" id="xpOverlayState" autoHideDisabled="{{autoHideDisabled}}" data="{{data}}" showed="{{showed}}" target="{{target}}"></template>
+        <template context="{{}}" is="xp-overlay-state" id="xpOverlayState" autoHideDisabled="{{autoHideDisabled}}" showed="{{showed}}"></template>
         <div id="xpDialogBackdrop" on-click="{{hide}}"></div>
         <div id="xpDialogWrapper"><content id="content"></content></div>
     </template>
@@ -94,13 +94,11 @@ This element is used to display a dialog.
              * Shows the dialog.
              *
              * @method show
-             * @param {Element | string} target
-             * @param {*} [data]
              * @returns {Element}
              */
-            show: function (target, data) {
+            show: function () {
                 var self = this;
-                self.$.xpOverlayState.show(target, data);
+                self.$.xpOverlayState.show();
                 return self;
             },
 
@@ -108,13 +106,11 @@ This element is used to display a dialog.
              * Toggles the dialog.
              *
              * @method toggle
-             * @param {Element | string} target
-             * @param {*} [data]
              * @returns {Element}
              */
-            toggle: function (target, data) {
+            toggle: function () {
                 var self = this;
-                self.$.xpOverlayState.toggle(target, data);
+                self.$.xpOverlayState.toggle();
                 return self;
             },
 
@@ -227,14 +223,6 @@ This element is used to display a dialog.
                  * @default false
                  */
                 showed: {reflect: true, value: false},
-
-                /**
-                 * The `id` of the targeted element or the element itself.
-                 *
-                 * @attribute target
-                 * @type Element | string
-                 */
-                target: {reflect: false, value: null},
 
                 /**
                  * The dialog's width. If `0` the dialog will resize itself based on it's content.
