@@ -1,3 +1,3 @@
 # xp-dialog
 
-See the [`documentation page`](http://www.expandjs.com/elements/xp-dialog) for more information.
+See the [`documentation page`](http://expandjs.com/elements/xp-dialog) for more information.
