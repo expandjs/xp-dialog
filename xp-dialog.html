@@ -63,7 +63,7 @@ This element is used to display a dialog.
             }
         </style>
         <template context="{{}}" is="xp-overlay-state" id="xpOverlayState" autoHideDisabled="{{autoHideDisabled}}" showed="{{showed}}"></template>
-        <div id="xpDialogBackdrop" on-click="{{hide}}"></div>
+        <div id="xpDialogBackdrop" on-click="{{handleHide}}"></div>
         <div id="xpDialogWrapper"><content id="content"></content></div>
     </template>
 
@@ -247,6 +247,13 @@ This element is used to display a dialog.
             // LISTENER
             ready: function () {
                 XP.listen('resize', this.align.bind(this));
+            },
+
+            /*********************************************************************/
+
+            // HANDLER
+            handleClick: function (event) {
+                if (!event.button) { this.hide(); }
             }
         });
     </script>
