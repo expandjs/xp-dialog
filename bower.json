@@ -22,8 +22,8 @@
     "**/.*"
   ],
   "dependencies": {
-    "expandjs": "ExpandJS/expandjs",
-    "xp-overlay-state": "ExpandJS/xp-overlay-state",
+    "expandjs": "ExpandJS/expandjs#alpha",
+    "xp-overlay-state": "ExpandJS/xp-overlay-state#alpha",
     "polymer": "Polymer/polymer#^0.5"
   }
 }
