@@ -15,12 +15,12 @@ This element is used to display a dialog.
 @group containers
 @homepage http://expandjs.com/elements/xp-dialog
 
-@behavior xp-overlay-behavior http://expandjs.com/elements/xp-overlay-behavior
+@behavior xp-overlay-behavior http://expandjs.com/elements/xp-overlay-behavior#0.9.1
 
-@dependency polymer Polymer/polymer
-@dependency expandjs ExpandJS/expandjs
-@dependency iron-flex-layout PolymerElements/iron-flex-layout
-@dependency xp-overlay-behavior ExpandJS/xp-overlay-behavior
+@dependency polymer Polymer/polymer#^1.0.4
+@dependency expandjs ExpandJS/expandjs#0.9.1
+@dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.2
+@dependency xp-overlay-behavior ExpandJS/xp-overlay-behavior#0.9.1
 -->
 
 <link rel="import" href="../polymer/polymer.html">
@@ -192,7 +192,7 @@ This element is used to display a dialog.
 
             // HANDLER
             _handleBackdrop: function (event) {
-                if (!event.button) { this.hide(); }
+                if (!this.autoHideDisabled && !event.button) { this.hide(); }
             },
 
             // HANDLER
