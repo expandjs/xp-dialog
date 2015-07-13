@@ -18,9 +18,9 @@ This element is used to display a dialog.
 @behavior xp-overlay-behavior http://expandjs.com/elements/xp-overlay-behavior
 
 @dependency polymer Polymer/polymer#^1.0.0
-@dependency expandjs ExpandJS/expandjs#0.9.3
+@dependency expandjs ExpandJS/expandjs#0.9.4
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
-@dependency xp-overlay-behavior ExpandJS/xp-overlay-behavior#0.9.3
+@dependency xp-overlay-behavior ExpandJS/xp-overlay-behavior#0.9.4
 -->
 
 <link rel="import" href="../polymer/polymer.html">
@@ -82,6 +82,20 @@ This element is used to display a dialog.
             /*********************************************************************/
 
             /**
+             * Resets the dialog's forms.
+             *
+             * @method reset
+             * @returns {Element}
+             */
+            reset: function () {
+                var self = this;
+                XP.invoke(XP.getElements(Polymer.dom(self.context || self), 'form'), 'reset');
+                return self;
+            },
+
+            /*********************************************************************/
+
+            /**
              * Aligns the dialog.
              *
              * @method _align
@@ -95,6 +109,19 @@ This element is used to display a dialog.
             },
 
             /**
+             * Resets the dialog's forms.
+             *
+             * @method _reset
+             * @returns {Element}
+             * @private
+             */
+            _reset: function () {
+                var self = this;
+                if (!self.showed && !self.autoResetDisabled) { XP.delay(self.reset.bind(self), 200); }
+                return self;
+            },
+
+            /**
              * Resizes the dialog.
              *
              * @method _resize
@@ -104,12 +131,15 @@ This element is used to display a dialog.
             _resize: function () {
 
                 // Vars
-                var self = this;
+                var self   = this,
+                    margin = XP.getMargin(self);
 
                 // Stylizing
+                XP.setStyle(self, 'height', self.height && !self.fullScreen ? 'calc(100% - ' + (margin.top + margin.bottom) + 'px)' : null);
                 XP.setStyle(self, 'margin', self.fullScreen ? 0 : null);
-                XP.setStyle(self, 'height', self.height ? self.height + 'px' : null);
-                XP.setStyle(self, 'width', self.width ? self.width + 'px' : null);
+                XP.setStyle(self, 'max-height', self.height && !self.fullScreen ? self.height + 'px' : null);
+                XP.setStyle(self, 'max-width', self.width && !self.fullScreen ? self.width + 'px' : null);
+                XP.setStyle(self, 'width', self.width && !self.fullScreen ? 'calc(100% - ' + (margin.left + margin.right) + 'px)' : null);
 
                 // Aligning
                 self._align();
@@ -122,11 +152,25 @@ This element is used to display a dialog.
             // OBSERVERS
             observers: [
                 '_align(showed)',
+                '_reset(showed)',
                 '_resize(fullScreen, height, width)'
             ],
 
             // PROPERTIES
             properties: {
+
+                /**
+                 * If set to true, the dialog's forms will not reset when showed.
+                 *
+                 * @attribute auto-reset-disabled
+                 * @type boolean
+                 * @default false
+                 */
+                autoResetDisabled: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
 
                 /**
                  * If set to true, the backdrop is transparent.
@@ -182,6 +226,11 @@ This element is used to display a dialog.
             },
 
             /*********************************************************************/
+
+            // LISTENER
+            attached: function () {
+                this._resize();
+            },
 
             // LISTENER
             ready: function () {
