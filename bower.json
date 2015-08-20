@@ -2,6 +2,7 @@
   "name": "xp-dialog",
   "license": "BSD-3-Clause",
   "version": "0.9.6",
+  "main": "xp-dialog.html",
   "description": "A custom element used to create a dialog box",
   "homepage": "http://expandjs.com/elements/xp-dialog",
   "authors": [
@@ -14,9 +15,6 @@
     "html5",
     "expandjs",
     "web-components"
-  ],
-  "main": [
-    "xp-dialog.html"
   ],
   "ignore": [
     "**/.*"
