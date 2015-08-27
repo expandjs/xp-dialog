@@ -31,42 +31,42 @@ This element is used to display a dialog.
 
 <dom-module id="xp-dialog">
 
-    <link rel="import" type="css" href="../xp-overlay-behavior/xp-overlay-behavior.css">
-
-    <style>
-        :host {
-            background: hsla(0, 0%, 100%, 1);
-            margin: 24px 40px;
-        }
-
-        :host([full-screen]) {
-            height: 100vh !important;
-            margin: 0 !important;
-            width: 100vw !important;
-        }
-
-        :host #xpDialogBackdrop {
-            @apply(--layout-fit);
-            background: hsla(0, 0%, 0%, 0.5);
-            position: fixed !important; /* override */
-        }
-
-        :host([backdrop-disabled]) #xpDialogBackdrop {
-            background: transparent !important;
-        }
-
-        :host #xpDialogWrapper {
-            background: inherit;
-            border-radius: inherit;
-            height: 100%;
-            overflow: auto;
-            position: relative;
-        }
-    </style>
-
     <template>
+
+        <style include="xp-overlay-styles">
+            :host {
+                background: hsla(0, 0%, 100%, 1);
+                margin: 24px 40px;
+            }
+
+            :host([full-screen]) {
+                height: 100vh !important;
+                margin: 0 !important;
+                width: 100vw !important;
+            }
+
+            :host #xpDialogBackdrop {
+                @apply(--layout-fit);
+                background: hsla(0, 0%, 0%, 0.5);
+                position: fixed !important; /* override */
+            }
+
+            :host([backdrop-disabled]) #xpDialogBackdrop {
+                background: transparent !important;
+            }
+
+            :host #xpDialogWrapper {
+                background: inherit;
+                border-radius: inherit;
+                height: 100%;
+                overflow: auto;
+                position: relative;
+            }
+        </style>
+
         <div id="xpDialogBackdrop" on-click="_handleBackdrop"></div>
         <div id="xpDialogWrapper"><content id="content"></content></div>
+
     </template>
 
     <script>
