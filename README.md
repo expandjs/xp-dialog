@@ -1,3 +1,3 @@
 # xp-dialog
 
-See the [`documentation page`](http://expandjs.com/elements/xp-dialog) for more information.
+This repository **is deprecated**. Use [`xp-dialog-behavior`](https://github.com/expandjs/xp-dialog-behavior) instead.
